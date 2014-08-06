@@ -12,12 +12,24 @@
         var $body = $('body');
         $body.html('');
 
-        for (var i = 0; i < streams.home.length; i++) {
-          var tweet = streams.home[i];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("hour").fromNow());
-          $tweet.appendTo($body);
+
+        function displayTweets () {
+          for (var i = 0; i < streams.home.length; i++) {
+            var tweet = streams.home[i];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
+            $tweet.appendTo($body);
+          };
         };
+
+        function removeTweets (){
+          $("div").remove();
+        };
+
+        displayTweets();
+
+        //Run removeTweets and displayTweets every 3 seconds
+        setInterval(function(){removeTweets();displayTweets();},3000);
 
       });
 
