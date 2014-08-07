@@ -14,6 +14,7 @@
         var $button = $('<button class="update">Update Feed</button>');
         $button.appendTo($body);
 
+        // Gets tweets from streams.home
         function getLastTweets(num) {
           for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
             var tweet = streams.home[i];
@@ -23,15 +24,17 @@
           };
         };
 
+        // Gets tweets from a user's timeline
         function getUsersTweets(user, num){
           for (var i = (streams.users[user].length - 1); i > ((streams.users[user].length - 1) - num); i--) {
             var tweet = streams.users[user][i];
-            var $tweet = $('<div></div>');
+            var $tweet = $('<div data-user=\"'+ user +'\"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
             $tweet.appendTo($body);
           };
         }
 
+        //Initial tweets after page load
         getLastTweets(10);
         
         $(".update").on('click',function(){
@@ -39,6 +42,7 @@
           getLastTweets(10);
         });
 
+        // Clicking "Update" somehow unlinks this event handler and getUsersTweets doesn't work after clicking "Update"
         $("div").on('click', function(){
           var user = $(this).data("user");
           getUsersTweets(user, 10);
