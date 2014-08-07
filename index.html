@@ -11,8 +11,16 @@
         margin:0px;
       }
 
+      h2{
+        margin:2px;
+      }
+
       h3{
         margin:0px;
+      }
+
+      button{
+        margin:10px;
       }
 
     </style>
@@ -23,6 +31,8 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
+        var $mainTitle = $('<h2>twittler timeline</h2>');
+        $mainTitle.appendTo($body);
         var $button = $('<button class="update">Update Feed</button>');
         $button.appendTo($body);
 
@@ -30,7 +40,7 @@
         function getLastTweets(num) {
           for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
             var tweet = streams.home[i];
-            var $tweet = $('<div data-user=\"'+ streams.home[i].user +'\"></div>');
+            var $tweet = $('<div class="maintimeline" data-user=\"'+ streams.home[i].user +'\"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
             $tweet.appendTo($body);
           };
@@ -44,7 +54,7 @@
           $title.appendTo($body);
           for (var i = (streams.users[user].length - 1); i > ((streams.users[user].length - 1) - num); i--) {
             var tweet = streams.users[user][i];
-            var $tweet = $('<div data-user=\"'+ user +'\"></div>');
+            var $tweet = $('<div class="usertimeline" data-user=\"'+ user +'\"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
             $tweet.appendTo($body);
           };
@@ -52,6 +62,8 @@
         
         $(".update").on('click',function(){
           $('div').remove();
+          $('h3').remove();
+          $('br').remove();
           getLastTweets(10);
           divListener();
         });
