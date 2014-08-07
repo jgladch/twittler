@@ -12,9 +12,8 @@
         var $body = $('body');
         $body.html('');
 
-
-        function displayTweets () {
-          for (var i = 0; i < streams.home.length; i++) {
+        function getLastTweets(num) {
+          for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
             var tweet = streams.home[i];
             var $tweet = $('<div></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
@@ -26,10 +25,10 @@
           $("div").remove();
         };
 
-        displayTweets();
+        getLastTweets(10);
 
-        //Run removeTweets and displayTweets every 3 seconds
-        setInterval(function(){removeTweets();displayTweets();},3000);
+        //Remove previous tweets and getLastTweets every 3 seconds
+        setInterval(function(){$("div").remove();getLastTweets(10);},3000);
 
       });
 
