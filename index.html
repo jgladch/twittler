@@ -33,20 +33,23 @@
             $tweet.appendTo($body);
           };
         }
-
-        //Initial tweets after page load
-        getLastTweets(10);
         
         $(".update").on('click',function(){
           $('div').remove();
           getLastTweets(10);
+          divListener();
         });
 
         // Clicking "Update" somehow unlinks this event handler and getUsersTweets doesn't work after clicking "Update"
-        $("div").on('click', function(){
+        function divListener(){$("div").on('click', function(){
           var user = $(this).data("user");
           getUsersTweets(user, 10);
-        });
+          });
+        };
+
+        //Initial tweets after page load
+        getLastTweets(10);
+        divListener();
 
       });
 
