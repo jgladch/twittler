@@ -4,6 +4,18 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="moment.js"></script>
+    <style media="screen" type="text/css">
+
+      body{
+        font-family: "Helvetica";
+        margin:0px;
+      }
+
+      h3{
+        margin:0px;
+      }
+
+    </style>
   </head>
   <body>
     <script>
@@ -26,6 +38,10 @@
 
         // Gets tweets from a user's timeline
         function getUsersTweets(user, num){
+          var $breakLine = $('<br />');
+          var $title = $('<h3>@'+user+'\'s timeline</h3>');
+          $breakLine.appendTo($body);
+          $title.appendTo($body);
           for (var i = (streams.users[user].length - 1); i > ((streams.users[user].length - 1) - num); i--) {
             var tweet = streams.users[user][i];
             var $tweet = $('<div data-user=\"'+ user +'\"></div>');
