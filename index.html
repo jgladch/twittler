@@ -17,17 +17,31 @@
         function getLastTweets(num) {
           for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
             var tweet = streams.home[i];
-            var $tweet = $('<div></div>');
+            var $tweet = $('<div data-user=\"'+ streams.home[i].user +'\"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
             $tweet.appendTo($body);
           };
         };
+
+        function getUsersTweets(user, num){
+          for (var i = (streams.users[user].length - 1); i > ((streams.users[user].length - 1) - num); i--) {
+            var tweet = streams.users[user][i];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
+            $tweet.appendTo($body);
+          };
+        }
 
         getLastTweets(10);
         
         $(".update").on('click',function(){
           $('div').remove();
           getLastTweets(10);
+        });
+
+        $("div").on('click', function(){
+          var user = $(this).data("user");
+          getUsersTweets(user, 10);
         });
 
       });
