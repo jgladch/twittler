@@ -11,6 +11,8 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
+        var $button = $('<button class="update">Update Feed</button>');
+        $button.appendTo($body);
 
         function getLastTweets(num) {
           for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
@@ -21,14 +23,12 @@
           };
         };
 
-        function removeTweets (){
-          $("div").remove();
-        };
-
         getLastTweets(10);
-
-        //Remove previous tweets and getLastTweets every 3 seconds
-        setInterval(function(){$("div").remove();getLastTweets(10);},3000);
+        
+        $(".update").on('click',function(){
+          $('div').remove();
+          getLastTweets(10);
+        });
 
       });
 
