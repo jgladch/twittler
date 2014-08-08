@@ -16,12 +16,27 @@
 
         //get main timeline tweets
         function timelineTweets(num) {
+          $('#timeline > div').remove();
+
           for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
             var tweet = streams.home[i];
             var $tweet = $('<div class="maintimeline" data-user=\"'+ streams.home[i].user +'\"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
             $timeline.append($tweet);
           };
+
+          $(".update").on('click',function(){
+            timelineTweets(10);
+          });
+
+          $(".clear").on('click',function(){
+            $('#usertweets > div, h3').remove();
+          });
+
+          $('#timeline .maintimeline').on('click', function(){
+            var user = $(this).data("user");
+            getUserTweets(user, 1);
+          });
         };
 
         function getUserTweets(name, num){
@@ -36,90 +51,20 @@
         };
 
         timelineTweets(10);
-        getUserTweets('shawndrost',1);
-
-        $(".update").on('click',function(){
-          $('#timeline > div').remove();
-          timelineTweets(10);
-        });
-
-        // $(".maintimeline").on('click',function(){
-        //   var user = $(this).data("user");
-        //   console.log($(this).data("user"));
-        //   getUserTweets(user, 10);
-        // });
-
-        $('#timeline .maintimeline').on('click', function(){
-          console.log('success');
-        });
-
-        // timelineTweets(10);
-        // getUserTweets('shawndrost',1);
-
-
-        // var $body = $('body');
-        // $body.html('');
-        // var $mainTitle = $('<h2>twittler timeline</h2>');
-        // $mainTitle.appendTo($body);
-        // var $button = $('<button class="update">Update Feed</button>');
-        // $button.appendTo($body);
-
-        // Gets tweets from streams.home
-        // function getLastTweets(num) {
-        //   for (var i = (streams.home.length - 1); i > ((streams.home.length - 1) - num); i--) {
-        //     var tweet = streams.home[i];
-        //     var $tweet = $('<div class="maintimeline" data-user=\"'+ streams.home[i].user +'\"></div>');
-        //     $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
-        //     $tweet.appendTo($body);
-        //   };
-        // };
-
-        // Gets tweets from a user's timeline
-        // function getUsersTweets(user, num){
-        //   var $breakLine = $('<br />');
-        //   var $title = $('<h3>@'+user+'\'s timeline</h3>');
-        //   $breakLine.appendTo($body);
-        //   $title.appendTo($body);
-        //   for (var i = (streams.users[user].length - 1); i > ((streams.users[user].length - 1) - num); i--) {
-        //     var tweet = streams.users[user][i];
-        //     var $tweet = $('<div class="usertimeline" data-user=\"'+ user +'\"></div>');
-        //     $tweet.text('@' + tweet.user + ': ' + tweet.message + " - " + moment(tweet.created_at).startOf("minute").fromNow());
-        //     $tweet.appendTo($body);
-        //   };
-        // }
-        
-        // $(".update").on('click',function(){
-        //   $('div').remove();
-        //   $('h3').remove();
-        //   $('br').remove();
-        //   getLastTweets(10);
-        //   divListener();
-        // });
-
-        // Clicking "Update" somehow unlinks this event handler and getUsersTweets doesn't work after clicking "Update"
-        // function divListener(){$("div").on('click', function(){
-        //   var user = $(this).data("user");
-        //   getUsersTweets(user, 10);
-        //   });
-        // };
-
-        //Initial tweets after page load
-        // getLastTweets(10);
-        // divListener();
 
       });
 
     </script>
 
     <div class="container">
-      <h2>twittler timeline</h2>
-      <button class="update">Update Feed</button>
-      <div class="row clearfix">
-        
+      <div class="row clearfix">        
         <div id="timeline" class="col-md-6 column">
-  
+          <h2>twittler timeline</h2>
+          <button class="update">Update Feed</button>
         </div>
         <div id="usertweets" class="col-md-6 column">
+          <h2>user timelines</h2>
+          <button class="clear">Clear</button>
         </div>
       </div>
     </div>
