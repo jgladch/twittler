@@ -5,6 +5,33 @@
     <script src="data_generator.js"></script>
     <script src="moment.js"></script>
     <link rel="stylesheet" href="bootstrap.css">
+    <style media="screen" type="text/css">
+      h2{
+        color:#E0E6FF;
+      }
+      h3{
+        color:#E0E6FF;
+      }
+      body{
+        background-color:#747C9E;
+      }
+      div{
+        color:#fff;
+      }
+      button{
+        color:#6256B9;
+      }
+      div.row.clearfix{
+        background-color:#747C9E;
+      }
+      div#timeline{
+        background-color:#BDBADD;
+        padding-bottom:10px;
+      }
+      div#usertweets{
+        background-color:#BDBADD;
+      }
+    </style>
   </head>
   <body>
     <script>
@@ -35,18 +62,21 @@
 
           $('#timeline .maintimeline').on('click', function(){
             var user = $(this).data("user");
-            getUserTweets(user, 1);
+            getUserTweets(user);
           });
         };
 
-        function getUserTweets(name, num){
+        function getUserTweets(name){
           var $title = $('<h3>@'+name+'\'s timeline</h3>');
           $usertweets.append($title);
-          for (var i = (streams.users[name].length - 1); i > ((streams.users[name].length - 1) - num); i--) {
+
+
+          for (var i = (streams.users[name].length - 1); i > 0; i--) {
             var tweet = streams.users[name][i];
             var message = streams.users[name][i].message;
             var createdAt = streams.users[name][i].created_at;
             $usertweets.append('<div class="usertimeline" data-user="'+name+'">@'+name+': '+message+' - '+moment(createdAt).startOf("minute").fromNow()+'</div>');
+
           };
         };
 
@@ -62,7 +92,9 @@
           <h2>twittler timeline</h2>
           <button class="update">Update Feed</button>
         </div>
-        <div id="usertweets" class="col-md-6 column">
+        <div id="split" class="col-md-1 column">
+        </div>
+        <div id="usertweets" class="col-md-5 column">
           <h2>user timelines</h2>
           <button class="clear">Clear</button>
         </div>
